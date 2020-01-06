@@ -1,6 +1,9 @@
 # ansible-faker - v0.4.0-alpha
 
 [![Ansible Role](https://img.shields.io/ansible/role/45692)](https://galaxy.ansible.com/fititnt/faker)
+![Ansible Role Downloads](https://img.shields.io/ansible/role/d/45587)
+![Ansible Quality Score](https://img.shields.io/ansible/quality/45587)
+[![Build Status](https://travis-ci.com/fititnt/ansible-faker.svg?branch=master)](https://travis-ci.com/fititnt/ansible-faker)
 
 **[working-draft] Faker is a Ansible role that generates fake data for you.
 Inspired on [PHP Faker](https://github.com/fzaninotto/Faker). Initial work from
@@ -25,18 +28,21 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
-        - [`faker_sample_content_cdns`](#faker_sample_content_cdns)
-        - [`faker_sample_content_static_sites`](#faker_sample_content_static_sites)
-        - [`faker_sample_content_phps`](#faker_sample_content_phps)
-        - [`faker_devel_nginx_*`](#faker_devel_nginx_)
+        - [`faker_cdns`](#faker_cdns)
+        - [`faker_groups`](#faker_groups)
+        - [`faker_static_sites`](#faker_static_sites)
+        - [`faker_php_sites`](#faker_php_sites)
+        - [`faker_users`](#faker_users)
     - [Special APIs](#special-apis)
-        - [`faker_autoinstall_dependencies`](#faker_autoinstall_dependencies)
-        - [`faker_autoinstall_repositories`](#faker_autoinstall_repositories)
+        - [faker_autoinstall_*](#faker_autoinstall_)
+            - [`faker_autoinstall_dependencies`](#faker_autoinstall_dependencies)
+            - [`faker_autoinstall_repositories`](#faker_autoinstall_repositories)
         - [faker_default_*](#faker_default_)
             - [`faker_default_user`](#faker_default_user)
             - [`faker_default_group`](#faker_default_group)
             - [`faker_default_directory_mode`](#faker_default_directory_mode)
             - [`faker_default_file_mode`](#faker_default_file_mode)
+            - [`faker_iswindows`](#faker_iswindows)
     - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
 - [Example Playbooks](#example-playbooks)
@@ -80,44 +86,89 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
-#### `faker_sample_content_cdns`
+#### `faker_cdns`
 > Deploy sample content on target paths designed to test a CDN (Content
 Delivery Network).
 
 **List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `faker_sample_content_static_sites`
+```yaml
+    faker_cdns:
+      - dest: /home/cdn-site-a/public_html
+        owner: cdn-site-a
+        group: cdns
+      - dest: /home/cdn-site-b/public_html
+        owner: cdn-site-b
+        group: cdns
+```
+
+#### `faker_groups`
+> Create operational system groups.
+
+**List of groups to add/remove.** Values from Ansible modules
+[group](https://docs.ansible.com/ansible/latest/modules/group_module.html)
+and [win_group](https://docs.ansible.com/ansible/latest/modules/win_group_module.html)
+
+```yaml
+    faker_groups:
+      - name: "www-data"
+      - name: "haproxy"
+```
+
+#### `faker_static_sites`
 > Deploy sample content of HTML+CSS+JS static website on target paths to be be
 used as test. The string `Hello, world!` is granteed to always exist.
 
 **List of paths to deploy sample content of [files/static-site](files/static-site)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `faker_sample_content_phps`
+#### `faker_php_sites`
 > Deploy sample content of PHP files on target paths to be used to test if PHP
 is working.
 
 **List of paths to deploy sample content of [files/php](files/php)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `faker_devel_nginx_*`
+#### `faker_users`
+> Create operational system users.
+
+**List of users to add/remove.** Values from Ansible modules
+[user](https://docs.ansible.com/ansible/latest/modules/user_module.html)
+and [win_user](https://docs.ansible.com/ansible/latest/modules/win_user_module.html)
+
+```yaml
+    faker_users:
+      - name: cdn-site-a
+        groups:
+          - cdns
+      - name: cdn-site-b
+        groups:
+          - cdns
+      - name: site-a
+      - name: php-demo
+      - name: fititnt
+        authorized_key:
+          key: https://github.com/fititnt.keys
+```
 
 ### Special APIs
 
-#### `faker_autoinstall_dependencies`
+#### faker_autoinstall_*
+
+##### `faker_autoinstall_dependencies`
 - Default: `false`
 
-Some A2S public APIs may require packages that already are not automaticaly
+Some Faker public APIs may require packages that already are not automaticaly
 installed with Ansible. With this option set to true/yes A2S will install for
 you.
 
-#### `faker_autoinstall_repositories`
+##### `faker_autoinstall_repositories`
 - Default: `false`
 
-Some A2S public APIs may require dependencies that are not available on some
+Some Faker public APIs may require dependencies that are not available on some
 versions of operational systems without installation of some external
-repositories. With this option set to true/yes A2S will autoinstall for
+repositories. With this option set to true/yes Faker will autoinstall for
 you.
 
 <!--
@@ -152,9 +203,30 @@ explicitly provide a value.
 -->
 
 ##### `faker_default_user`
+- Default: `root` or `Administrator`<sup>Windows</sup>
+- Type: String
+- Example values: `root`. `www-data`. `nobody`
+
+Default user that will be used by Faker on all public APIs when not explicitly
+specified. Defaults to `root` or `Administrator`  (based on operational system)
+
 ##### `faker_default_group`
+- Default: `root`, `wheel`<sup>BSD, MacOS</sup> or `Administrators`<sup>Windows</sup>
+- Type: String
+- Example values: `root`. `wheel`. `www-data`, `www`
+
+Default group that will be used by Faker on all public APIs when not explicitly
+specified. Defautls to `root`, `wheel` or `Administrators` (based on operational
+system)
+
 ##### `faker_default_directory_mode`
 ##### `faker_default_file_mode`
+##### `faker_iswindows`
+- Default: `false`
+- Type: Bool
+- Example values: `true`. `yes`. `false`, `no`
+
+Explicitly define that the node is Windows. Defaults to `false`
 
 ### Internal variables
 
@@ -176,7 +248,7 @@ This role does not depend on other Ansible roles. Not even the
 ### Minimal Playbook
 
 > Note: If you run this role without explicitly
-> use any [Public APIs](#public-apis) (variables starte with `faker_` that
+> use any [Public APIs](#public-apis) (variables started with `faker_` that
 > are not defaults) this Ansible role will make no changes on your system.
 
 ```yaml
@@ -184,7 +256,7 @@ This role does not depend on other Ansible roles. Not even the
 #       need to specify variables
 - hosts: all
   roles:
-    - { role: fititnt.ansible-syntactic-sugar }
+    - { role: fititnt.faker }
 ```
 
 ### Playbook using all Public APIs
@@ -194,9 +266,36 @@ This role does not depend on other Ansible roles. Not even the
   remote_user: root
   vars:
 
-    faker_sample_content_static_sites:
-      - path: /home/user2/public_html
-        user: user2
+    faker_groups:
+      - name: cdns
+
+    faker_users:
+      - name: cdn-site-a
+        groups:
+          - cdns
+      - name: cdn-site-b
+        groups:
+          - cdns
+      - name: site-a
+      - name: php-demo
+      - name: fititnt
+        authorized_key:
+          key: https://github.com/fititnt.keys
+
+    # faker_sample_content_static_sites:
+    faker_static_sites:
+      - dest: /home/site-a/public_html
+        owner: site-a
+        group: site-a
+
+    # faker_sample_content_cdns:
+    faker_cdns:
+      - dest: /home/cdn-site-a/public_html
+        owner: cdn-site-a
+        group: cdns
+      - dest: /home/cdn-site-b/public_html
+        owner: cdn-site-b
+        group: cdns
 
     # faker_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:

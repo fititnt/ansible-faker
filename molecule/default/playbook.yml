@@ -52,4 +52,3 @@
     - name: "Set ISCONTEINER=1"
       shell: "export ISCONTEINER=1"
       changed_when: false # This specific pre_task break Idempotence if not ignored
-

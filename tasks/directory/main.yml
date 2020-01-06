@@ -30,9 +30,7 @@
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"
 
-
 # - name: "{{ role_path }}/tasks/directory/directory.yml"
 #   include: "{{ role_path }}/tasks/directory/directory.yml"
 #   tags:
 #     - a2s-file-directory
-
