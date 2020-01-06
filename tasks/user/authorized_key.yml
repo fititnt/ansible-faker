@@ -16,6 +16,6 @@
     manage_dir: "{{ item.authorized_key.manage_dir | default(omit) }}"
     path: "{{ item.authorized_key.path | default(omit) }}"
     validate_certs: "{{ item.authorized_key.validate_certs | default(omit) }}"
-  with_items: "{{ a2s_users }}"
+  with_items: "{{ faker_users }}"
   when:
     - "(item.authorized_key is defined)"

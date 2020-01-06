@@ -35,8 +35,8 @@
 # Note, actually  more systems are detected than these ones (the
 # distribution.py mention OpenBSD for example)
 
-a2s_internal_root_user: 'root'
-a2s_internal_root_group: 'root'
-a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+faker_internal_root_user: 'root'
+faker_internal_root_group: 'root'
+faker_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
 
-a2s_internal_iswindows: false
+faker_internal_iswindows: false

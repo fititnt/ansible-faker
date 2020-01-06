@@ -10,7 +10,7 @@
 #       default RedHat variable to empty array instead of automate this
 #       configuration. (fititnt, 2019-12-08 07:46 BRT)
 
-a2s_internal_devel_nginx_prerequisites_packages: []
+faker_internal_devel_nginx_prerequisites_packages: []
 
 # This variable will be need only if we allow AP-ALB-Extras to install Ansible
-a2s_internal_bootstrap_ansible_control_node_packages: []
+faker_internal_bootstrap_ansible_control_node_packages: []

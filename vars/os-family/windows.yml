@@ -7,11 +7,11 @@
 #       AP-ALB-Extras will have some minimum changes to allow even windows
 #       (fititnt, 2020-01-02 06:15 BRT)
 
-# IMPORTANT: please set `a2s_iswindows: true` explicitly on a node so this
+# IMPORTANT: please set `faker_iswindows: true` explicitly on a node so this
 #            file will be loaded
 
-a2s_internal_root_user: 'Administrator'
-a2s_internal_root_group: 'Administrators'
-a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+faker_internal_root_user: 'Administrator'
+faker_internal_root_group: 'Administrators'
+faker_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
 
-a2s_internal_iswindows: true
+faker_internal_iswindows: true

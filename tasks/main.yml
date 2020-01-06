@@ -2,10 +2,10 @@
 # FILE:            {{ role_path }}/tasks/main.yml
 # LICENSE:         Public Domain
 
-- name: "AP-ALB Extras | Welcome message"
+- name: "Ansible Faker | Welcome message"
   debug:
     msg:
-      a2s_version: "{{ a2s_version }}"
+      faker_version: "{{ faker_version }}"
       node:
         os: "{{ ansible_os_family | default('undefined') | lower }}"
         dist: "{{ ansible_distribution | default('undefined') | lower }}"
@@ -20,21 +20,21 @@
     - always
 
 ## Variable loading based on node Operational System ___________________________
-- name: "AP-ALB Extras | OS Family variables"
+- name: "Ansible Faker | OS Family variables"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (a2s_iswindows is defined and a2s_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
-    - "{{ (a2s_vars_osfamily is defined) | ternary(a2s_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (faker_iswindows is defined and faker_iswindows|bool) | ternary('os-family/windows.yml', 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (faker_vars_osfamily is defined) | ternary(faker_vars_osfamily, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/{{ ansible_os_family | default('undefined') | lower }}.yml"
     - "os-family/{{ (ansible_os_family is defined) | ternary('untested','unknown') }}.yml"
   tags:
     - alb
     - always
 
-- name: "AP-ALB Extras | OS Family version variables"
+- name: "Ansible Faker | OS Family version variables"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (a2s_vars_osfamilyversion is defined) | ternary(a2s_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (faker_vars_osfamilyversion is defined) | ternary(faker_vars_osfamilyversion, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/os-family-version/{{ ansible_os_family | default('undefined') | lower }}-{{ ansible_distribution_major_version
       | default('undefined')
       | lower }}.yml"
@@ -43,20 +43,20 @@
     - alb
     - always
 
-- name: "AP-ALB Extras | Distribution variables (may override OS Family variables, if exist)"
+- name: "Ansible Faker | Distribution variables (may override OS Family variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (a2s_vars_distribution is defined) | ternary(a2s_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (faker_vars_distribution is defined) | ternary(faker_vars_distribution, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/distribution/{{ ansible_distribution | default('undefined') | lower }}.yml"
     - "os-family/distribution/no-os-family-customization.yml"
   tags:
     - alb
     - always
 
-- name: "AP-ALB Extras | Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
+- name: "Ansible Faker | Specific version distribution variables (may override OS Family and Distribution variables, if exist)"
   include_vars: "{{ item }}"
   with_first_found:
-    - "{{ (a2s_vars_distribution_version is defined) | ternary(a2s_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
+    - "{{ (faker_vars_distribution_version is defined) | ternary(faker_vars_distribution_version, 'name-of-a-file-that-does-not-exist.yml') }}"
     - "os-family/distribution/version/{{ ansible_distribution | default('undefined') | lower }}-{{ ansible_distribution_major_version
       | default('undefined')
       | lower }}.yml"
@@ -65,88 +65,61 @@
     - alb
     - always
 
-- name: "AP-ALB Extras | Result of pre-calculated variables on this play"
+- name: "Ansible Faker | Result of pre-calculated variables on this play"
   debug:
     msg:
-      a2s_default_user: "{{ a2s_default_user | default('undefined') }}"
-      a2s_default_group: "{{ a2s_default_group | default('undefined') }}"
-      a2s_default_directory_mode: "{{ a2s_default_directory_mode | default('undefined') }}"
-      a2s_default_file_mode: "{{ a2s_default_file_mode | default('undefined') }}"
-      a2s_isconteiner: "{{ a2s_isconteiner | default('undefined') }}"
+      faker_default_user: "{{ faker_default_user | default('undefined') }}"
+      faker_default_group: "{{ faker_default_group | default('undefined') }}"
+      faker_default_directory_mode: "{{ faker_default_directory_mode | default('undefined') }}"
+      faker_default_file_mode: "{{ faker_default_file_mode | default('undefined') }}"
+      faker_isconteiner: "{{ faker_isconteiner | default('undefined') }}"
   tags:
     - alb
     - always
 
-## Run each ALB Extra subcomponent _____________________________________________
+## Run each Faker Subcomponents ________________________________________________
 
-- name: "AP-ALB Extras | groups"
-  include: groups/main.yml
+- name: "Ansible Faker | group"
+  include: "{{ role_path }}/tasks/group/main.yml"
   when:
-    - "(a2s_groups is defined)
-      and (a2s_groups[0] is defined)
-      and (a2s_groups[0].name is defined)"
+    - "(faker_groups is defined)
+      and (faker_groups[0] is defined)
+      and (faker_groups[0].name is defined)"
+  tags:
+    - faker-group
 
-- name: "AP-ALB Extras | users"
-  include: users/main.yml
+- name: "Ansible Faker | user"
+  include: "{{ role_path }}/tasks/user/main.yml"
   when:
-    - "(a2s_users is defined)
-      and (a2s_users[0] is defined)
-      and (a2s_users[0].name is defined)"
+    - "(faker_users is defined)
+      and (faker_users[0] is defined)
+      and (faker_users[0].name is defined)"
   tags:
-    - albextras-users
+    - faker-user
 
-- name: "AP-ALB Extras | hosts"
-  include: hosts/main.yml
-  tags:
-    - albextras-hosts
-
-- name: "AP-ALB Extras | sample-content-static-site"
-  include: sample-content-static-site/main.yml
+- name: "Ansible Faker | static-site"
+  include: "{{ role_path }}/tasks/static-site/main.yml"
   when:
-    - "(a2s_sample_content_static_sites is defined)
-      and (a2s_sample_content_static_sites[0] is defined)
-      and (a2s_sample_content_static_sites[0].dest is defined)"
+    - "(faker_static_sites is defined)
+      and (faker_static_sites[0] is defined)
+      and (faker_static_sites[0].dest is defined)"
   tags:
-    - albextras-sample-content-static-site
+    - faker-static-site
 
-- name: "AP-ALB Extras | sample-content-cdn"
-  include: sample-content-cdn/main.yml
+- name: "Ansible Faker | cdn"
+  include: "{{ role_path }}/tasks/cdn/main.yml"
   when:
-    - "(a2s_sample_content_cdns is defined)
-      and (a2s_sample_content_cdns[0] is defined)
-      and (a2s_sample_content_cdns[0].dest is defined)"
+    - "(faker_cdns is defined)
+      and (faker_cdns[0] is defined)
+      and (faker_cdns[0].dest is defined)"
   tags:
-    - albextras-sample-content-cdn
+    - faker-cdn
 
-- name: "AP-ALB Extras | sample-content-php"
-  include: sample-content-php/main.yml
+- name: "Ansible Faker | php-site"
+  include: "{{ role_path }}/tasks/php-site/main.yml"
   when:
-    - "(a2s_sample_content_phps is defined)
-      and (a2s_sample_content_phps[0] is defined)
-      and (a2s_sample_content_phps[0].dest is defined)"
+    - "(faker_php_sites is defined)
+      and (faker_php_sites[0] is defined)
+      and (faker_php_sites[0].dest is defined)"
   tags:
-    - albextras-sample-content-php
-
-- name: "AP-ALB Extras | php"
-  include: php/main.yml
-  tags:
-    - albextras-php
-
-- name: "AP-ALB Extras | devel-nginx"
-  include: devel-nginx/main.yml
-  when:
-    - "(a2s_internal_devel_nginx_manange is sameas true)"
-  tags:
-    - albextras-devel-nginx
-
-- name: "AP-ALB Extras | adminer"
-  include: adminer/main.yml
-  tags:
-    - albextras-adminer
-
-- name: "AP-ALB Extras | rclone"
-  include: rclone/main.yml
-  when:
-    - "(a2s_internal_rclone_manange is sameas true)"
-  tags:
-    - albextras-rclone
+    - faker-php-site

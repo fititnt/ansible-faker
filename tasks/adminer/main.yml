@@ -1,8 +1,0 @@
----
-
-# FILE:            {{ role_path }}/tasks/adminer/main.yml
-# LICENSE:         Public Domain
-
-- name: "adminer | main.yml"
-  debug:
-    msg: "This is a draft. Not implemented at the moment"

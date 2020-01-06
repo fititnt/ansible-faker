@@ -11,7 +11,7 @@ multiple operational systems at same time (our case here) this logic actually
 make simpler to give long term maintenance!
 
 If you are trying to implement a new distro and/or make more deeper
-customizations, you _may_ need to know how these `a2s_internal_*`
+customizations, you _may_ need to know how these `faker_internal_*`
 variables are loaded.
 
 We make heavy use of [include_vars](https://docs.ansible.com/ansible/latest/modules/include_vars_module.html)
@@ -42,10 +42,10 @@ easily allow user customize this type of variable, we provide some special
 varialbes that, if exist and point to an YAML file, will replace (or add) what
 is already on the base Role:
 
-- `a2s_vars_osfamily`
-- `a2s_vars_osfamilyversion`
-- `a2s_vars_distribution`
-- `a2s_vars_distribution_version`
+- `faker_vars_osfamily`
+- `faker_vars_osfamilyversion`
+- `faker_vars_distribution`
+- `faker_vars_distribution_version`
 
 Please onsider can submit a Pull Request or open an issue to comment
 improvements that you had to make use these special variables.
@@ -55,7 +55,7 @@ improvements that you had to make use these special variables.
 Note that when replacing a list, like this:
 
 ```yaml
-a2s_internal_bootstrap_extra_tools:
+faker_internal_bootstrap_extra_tools:
   - name: py36-pip
     state: present
   - name: nmap
@@ -63,7 +63,7 @@ a2s_internal_bootstrap_extra_tools:
 ```
 
 Even if you want just `py36-pip` with `py37-pip`, you will need to override
-the complete list `a2s_internal_bootstrap_extra_tools`.
+the complete list `faker_internal_bootstrap_extra_tools`.
 
 ## Example
 

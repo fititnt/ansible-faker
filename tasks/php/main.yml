@@ -1,8 +1,0 @@
----
-
-# FILE:            {{ role_path }}/tasks/php/main.yml
-# LICENSE:         Public Domain
-
-- name: "php | main.yml"
-  debug:
-    msg: "This is a draft. Not implemented at the moment"

@@ -40,7 +40,7 @@
     system: "{{ item.system | default(omit) }}"
     uid: "{{ item.uid | default(omit) }}"
     update_password: "{{ item.update_password | default(omit) }}"
-  with_items: "{{ a2s_users }}"
+  with_items: "{{ faker_users }}"
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
@@ -59,7 +59,7 @@
     password_never_expires:  "{{ item.password_never_expires | default(omit) }}"
     update_password:  "{{ item.update_password | default(omit) }}"
     user_cannot_change_password:  "{{ item.user_cannot_change_password | default(omit) }}"
-  with_items: "{{ a2s_users }}"
+  with_items: "{{ faker_users }}"
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"

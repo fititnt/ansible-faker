@@ -6,12 +6,12 @@
 # SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
 
-- name: "{{ role_path }}/tasks/users/user.yml"
-  include: "{{ role_path }}/tasks/users/user.yml"
+- name: "{{ role_path }}/tasks/user/user.yml"
+  include: "{{ role_path }}/tasks/user/user.yml"
   tags:
-    - albextras-users-user
+    - faker-user-user
 
-- name: "{{ role_path }}/tasks/users/authorized_key.yml"
-  include: "{{ role_path }}/tasks/users/authorized_key.yml"
+- name: "{{ role_path }}/tasks/user/authorized_key.yml"
+  include: "{{ role_path }}/tasks/user/authorized_key.yml"
   tags:
-    - albextras-users-authorized-key
+    - faker-user-authorized-key

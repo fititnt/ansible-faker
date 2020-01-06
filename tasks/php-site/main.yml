@@ -1,29 +1,28 @@
 ---
 
-# FILE:            {{ role_path }}/tasks/sample-content-static-site/main.yml
+# FILE:            {{ role_path }}/tasks/php-site/main.yml
 # LICENSE:         Public Domain
 # SEE:             https://docs.ansible.com/ansible/latest/modules/file_module.html
 # SEE:             https://docs.ansible.com/ansible/latest/modules/copy_module.html
 
-- name: "sample-content-static-site | directory: create/modify base path"
+- name: "php-site | directory: create/modify base path"
   file:
     state: directory
     recurse: "{{ item.recurse | default('yes') }}"
     path: "{{ item.dest }}"
-    owner: "{{ item.owner | default(a2s_default_user) }}"
-    group: "{{ item.owner | default(a2s_default_group) }}"
-    mode: "{{ item.mode | default(a2s_default_directory_mode) }}"
+    owner: "{{ item.owner | default(faker_default_user) }}"
+    group: "{{ item.owner | default(faker_default_group) }}"
+    mode: "{{ item.mode | default(faker_default_directory_mode) }}"
     selevel: "{{ item.selevel | default(omit) }}"
     serole: "{{ item.serole | default(omit) }}"
     setype: "{{ item.setype | default(omit) }}"
     seuser: "{{ item.seuser | default(omit) }}"
     unsafe_writes: "{{ item.unsafe_writes | default(omit) }}"
-  with_items: "{{ a2s_sample_content_static_sites }}"
+  with_items: "{{ faker_php_sites }}"
 
-
-- name: "sample-content-static-site | copy contents"
+- name: "php-site | copy contents"
   copy:
-    src: "{{ role_path }}/files/static-site/"
+    src: "{{ role_path }}/files/php/"
     dest: "{{ item.dest }}"
     attributes: "{{ item.attributes | default(omit) }}"
     backup: "{{ item.backup | default(omit) }}"
@@ -33,10 +32,10 @@
     directory_mode: "{{ item.directory_mode | default(omit) }}"
     follow: "{{ item.follow | default(omit) }}"
     force: "{{ item.force | default(omit) }}"
-    group: "{{ item.owner | default(a2s_default_group) }}"
+    group: "{{ item.owner | default(faker_default_group) }}"
     local_follow: "{{ item.local_follow | default(omit) }}"
-    mode: "{{ item.mode | default(a2s_default_directory_mode) }}"
-    owner: "{{ item.owner | default(a2s_default_user) }}"
+    mode: "{{ item.mode | default(faker_default_directory_mode) }}"
+    owner: "{{ item.owner | default(faker_default_user) }}"
     remote_src: "{{ item.remote_src | default(omit) }}"
     selevel: "{{ item.selevel | default(omit) }}"
     serole: "{{ item.serole | default(omit) }}"
@@ -44,4 +43,4 @@
     seuser: "{{ item.seuser | default(omit) }}"
     unsafe_writes: "{{ item.unsafe_writes | default(omit) }}"
     validate: "{{ item.validate | default(omit) }}"
-  with_items: "{{ a2s_sample_content_static_sites }}"
+  with_items: "{{ faker_php_sites }}"

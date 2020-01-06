@@ -6,8 +6,8 @@
 #                  'Debian': ['Debian', 'Ubuntu', 'Raspbian', 'Neon', 'KDE neon',
 #                            'Linux Mint', 'SteamOS', 'Devuan', 'Kali', 'Cumulus Linux'],
 
-a2s_internal_root_user: 'root'
-a2s_internal_root_group: 'root'
-a2s_internal_package_manager_group: "apt"
+faker_internal_root_user: 'root'
+faker_internal_root_group: 'root'
+faker_internal_package_manager_group: "apt"
 
-a2s_internal_iswindows: false
+faker_internal_iswindows: false

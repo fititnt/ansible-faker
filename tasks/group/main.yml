@@ -12,7 +12,7 @@
     non_unique: "{{ item.non_unique | default(omit) }}"
     system: "{{ item.system | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
-  with_items: "{{ a2s_groups }}"
+  with_items: "{{ faker_groups }}"
   when:
     - "(a2s_internal_iswindows is undefined)
       or (a2s_internal_iswindows|bool is sameas false)"
@@ -22,7 +22,7 @@
     name: "{{ item.name }}"
     description: "{{ item.description | default(omit) }}"
     state: "{{ item.state | default(omit) }}"
-  with_items: "{{ a2s_groups }}"
+  with_items: "{{ faker_groups }}"
   when:
     - "(a2s_internal_iswindows is defined)
       and (a2s_internal_iswindows|bool is sameas true)"

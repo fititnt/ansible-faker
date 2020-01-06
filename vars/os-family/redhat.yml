@@ -7,8 +7,8 @@
 #                             'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS',
 #                             'OEL', 'Amazon', 'Virtuozzo', 'XenServer', 'Alibaba'],
 
-a2s_internal_root_user: 'root'
-a2s_internal_root_group: 'root'
-a2s_internal_package_manager_group: "yum"
+faker_internal_root_user: 'root'
+faker_internal_root_group: 'root'
+faker_internal_package_manager_group: "yum"
 
-a2s_internal_iswindows: false
+faker_internal_iswindows: false

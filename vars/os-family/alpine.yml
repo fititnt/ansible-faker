@@ -5,8 +5,8 @@
 # DESCRIPTION:     This file is loaded by default for at least these OSs:
 #                  'Alpine': ['Alpine'],
 
-a2s_internal_root_user: 'root'
-a2s_internal_root_group: 'root'
-a2s_internal_package_manager_group: "apk"
+faker_internal_root_user: 'root'
+faker_internal_root_group: 'root'
+faker_internal_package_manager_group: "apk"
 
-a2s_internal_iswindows: false
+faker_internal_iswindows: false

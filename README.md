@@ -1,14 +1,13 @@
-# ansible-faker ("faker") - v0.3.0-alpha
+# ansible-faker - v0.4.0-alpha
 
-[![Ansible Role](https://img.shields.io/ansible/role/45587)](https://galaxy.ansible.com/fititnt/faker)
+[![Ansible Role](https://img.shields.io/ansible/role/45692)](https://galaxy.ansible.com/fititnt/faker)
 
 **[working-draft] Faker is a Ansible role that generates fake data for you.
 Inspired on [PHP Faker](https://github.com/fzaninotto/Faker). Initial work from
 [ansible-syntactic-sugar](https://github.com/fititnt/ansible-syntactic-sugar)**
 
-> **Warning: this is a pre-release**. A stable version may never be released
-with this exact name. Variable naming conventions are likely to change
-drastically.
+> **Warning: this is a pre-release**. Variable naming conventions may change.
+Feedback is welcome!
 
 <!--
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
@@ -26,18 +25,18 @@ Note: this project may eventually be renamed.
 - [Requirements](#requirements)
 - [Role Variables](#role-variables)
     - [Public APIs](#public-apis)
-        - [`a2s_sample_content_cdns`](#a2s_sample_content_cdns)
-        - [`a2s_sample_content_static_sites`](#a2s_sample_content_static_sites)
-        - [`a2s_sample_content_phps`](#a2s_sample_content_phps)
-        - [`a2s_devel_nginx_*`](#a2s_devel_nginx_)
+        - [`faker_sample_content_cdns`](#faker_sample_content_cdns)
+        - [`faker_sample_content_static_sites`](#faker_sample_content_static_sites)
+        - [`faker_sample_content_phps`](#faker_sample_content_phps)
+        - [`faker_devel_nginx_*`](#faker_devel_nginx_)
     - [Special APIs](#special-apis)
-        - [`a2s_autoinstall_dependencies`](#a2s_autoinstall_dependencies)
-        - [`a2s_autoinstall_repositories`](#a2s_autoinstall_repositories)
-        - [a2s_default_*](#a2s_default_)
-            - [`a2s_default_user`](#a2s_default_user)
-            - [`a2s_default_group`](#a2s_default_group)
-            - [`a2s_default_directory_mode`](#a2s_default_directory_mode)
-            - [`a2s_default_file_mode`](#a2s_default_file_mode)
+        - [`faker_autoinstall_dependencies`](#faker_autoinstall_dependencies)
+        - [`faker_autoinstall_repositories`](#faker_autoinstall_repositories)
+        - [faker_default_*](#faker_default_)
+            - [`faker_default_user`](#faker_default_user)
+            - [`faker_default_group`](#faker_default_group)
+            - [`faker_default_directory_mode`](#faker_default_directory_mode)
+            - [`faker_default_file_mode`](#faker_default_file_mode)
     - [Internal variables](#internal-variables)
 - [Dependencies](#dependencies)
 - [Example Playbooks](#example-playbooks)
@@ -81,39 +80,39 @@ A description of the settable variables for this role should go here, including 
 
 ### Public APIs
 
-#### `a2s_sample_content_cdns`
+#### `faker_sample_content_cdns`
 > Deploy sample content on target paths designed to test a CDN (Content
 Delivery Network).
 
 **List of paths to deploy sample content of [files/videos](files/videos) and [files/images](files/images)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `a2s_sample_content_static_sites`
+#### `faker_sample_content_static_sites`
 > Deploy sample content of HTML+CSS+JS static website on target paths to be be
 used as test. The string `Hello, world!` is granteed to always exist.
 
 **List of paths to deploy sample content of [files/static-site](files/static-site)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `a2s_sample_content_phps`
+#### `faker_sample_content_phps`
 > Deploy sample content of PHP files on target paths to be used to test if PHP
 is working.
 
 **List of paths to deploy sample content of [files/php](files/php)**.
 Values from Ansible module [copy](https://docs.ansible.com/ansible/latest/modules/copy_module.html).
 
-#### `a2s_devel_nginx_*`
+#### `faker_devel_nginx_*`
 
 ### Special APIs
 
-#### `a2s_autoinstall_dependencies`
+#### `faker_autoinstall_dependencies`
 - Default: `false`
 
 Some A2S public APIs may require packages that already are not automaticaly
 installed with Ansible. With this option set to true/yes A2S will install for
 you.
 
-#### `a2s_autoinstall_repositories`
+#### `faker_autoinstall_repositories`
 - Default: `false`
 
 Some A2S public APIs may require dependencies that are not available on some
@@ -132,13 +131,13 @@ features of the _Public APIs_.
 
 -->
 
-#### a2s_default_*
-The default values from `a2s_default_*` exist to provide consistence
+#### faker_default_*
+The default values from `faker_default_*` exist to provide consistence
 across operational systems and will be used in some places if you did not
 explicitly provide a value.
 
 <!--
-> **backward compatibility notice**: the values from `a2s_default_*`
+> **backward compatibility notice**: the values from `faker_default_*`
 > **may** be updated betwen minor versions ("MINOR" on the `MAJOR.MINOR.PATCH`
 > format of [SemVer](https://semver.org/) intead of just majors versions of the
 > AP-ALB-Extras. If you have strong requeriments, we recommend you to either
@@ -152,10 +151,10 @@ explicitly provide a value.
 > specific case.
 -->
 
-##### `a2s_default_user`
-##### `a2s_default_group`
-##### `a2s_default_directory_mode`
-##### `a2s_default_file_mode`
+##### `faker_default_user`
+##### `faker_default_group`
+##### `faker_default_directory_mode`
+##### `faker_default_file_mode`
 
 ### Internal variables
 
@@ -177,7 +176,7 @@ This role does not depend on other Ansible roles. Not even the
 ### Minimal Playbook
 
 > Note: If you run this role without explicitly
-> use any [Public APIs](#public-apis) (variables starte with `a2s_` that
+> use any [Public APIs](#public-apis) (variables starte with `faker_` that
 > are not defaults) this Ansible role will make no changes on your system.
 
 ```yaml
@@ -195,11 +194,11 @@ This role does not depend on other Ansible roles. Not even the
   remote_user: root
   vars:
 
-    a2s_sample_content_static_sites:
+    faker_sample_content_static_sites:
       - path: /home/user2/public_html
         user: user2
 
-    # a2s_iswindows: true # Uncomment next variable only for Windows hosts.
+    # faker_iswindows: true # Uncomment next variable only for Windows hosts.
   roles:
     - { role: fititnt.faker }
 ```
