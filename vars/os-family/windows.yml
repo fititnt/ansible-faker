@@ -1,0 +1,17 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/windows.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/user_guide/windows.html
+
+# NOTE: this file is a draft. Windows support is not well tested but the
+#       AP-ALB-Extras will have some minimum changes to allow even windows
+#       (fititnt, 2020-01-02 06:15 BRT)
+
+# IMPORTANT: please set `a2s_iswindows: true` explicitly on a node so this
+#            file will be loaded
+
+a2s_internal_root_user: 'Administrator'
+a2s_internal_root_group: 'Administrators'
+a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+
+a2s_internal_iswindows: true

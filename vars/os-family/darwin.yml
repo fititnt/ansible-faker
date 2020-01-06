@@ -1,0 +1,12 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/darwin.yml
+# LICENSE:         Public Domain
+#
+# DESCRIPTION:     This file is loaded by default for at least these OSs:
+#                  'Darwin': ['MacOSX'],
+
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'wheel'
+a2s_internal_package_manager_group: "{{ ansible_pkg_mgr }}"
+
+a2s_internal_iswindows: false

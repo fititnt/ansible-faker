@@ -1,0 +1,65 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
+
+- name: "users | user (*nix): add/remove users"
+  user:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(omit) }}"
+    append: "{{ item.append | default(omit) }}"
+    authorization: "{{ item.authorization | default(omit) }}"
+    comment:  "{{ item.comment | default(omit) }}"
+    create_home:  "{{ item.create_home | default(omit) }}"
+    expires:  "{{ item.expires | default(omit) }}"
+    force:  "{{ item.force | default(omit) }}"
+    generate_ssh_key:  "{{ item.generate_ssh_key | default(omit) }}"
+    group: "{{ item.group | default(omit) }}"
+    groups: "{{ item.groups | default([]) | join(',') or omit }}"
+    hidden: "{{ item.hidden | default([]) | join(',') or omit }}"
+    home:  "{{ item.home | default(omit) }}"
+    local:  "{{ item.local | default(omit) }}"
+    login_class:  "{{ item.login_class | default(omit) }}"
+    move_home:  "{{ item.move_home | default(omit) }}"
+    non_unique:  "{{ item.non_unique | default(omit) }}"
+    password:  "{{ item.password | default(omit) }}"
+    password_lock:  "{{ item.password_lock | default(omit) }}"
+    profile:  "{{ item.profile | default(omit) }}"
+    remove:  "{{ item.remove | default(omit) }}"
+    role:  "{{ item.role | default(omit) }}"
+    seuser:  "{{ item.seuser | default(omit) }}"
+    shell:  "{{ item.shell | default(omit) }}"
+    skeleton: "{{ item.skeleton | default(omit) }}"
+    ssh_key_bits: "{{ item.ssh_key_bits | default(omit) }}"
+    ssh_key_comment: "{{ item.ssh_key_comment | default(omit) }}"
+    ssh_key_file: "{{ item.ssh_key_file | default(omit) }}"
+    ssh_key_passphrase: "{{ item.ssh_key_passphrase | default(omit) }}"
+    ssh_key_type: "{{ item.ssh_key_type | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    uid: "{{ item.uid | default(omit) }}"
+    update_password: "{{ item.update_password | default(omit) }}"
+  with_items: "{{ a2s_users }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+
+- name: "users | user (Windows): add/remove users"
+  win_user:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default(omit) }}"
+    account_disabled: "{{ item.account_disabled | default(omit) }}"
+    account_locked: "{{ item.account_locked | default([]) | join(',') or omit }}"
+    fullname:  "{{ item.fullname | default(omit) }}"
+    groups:  "{{ item.groups | default(omit) }}"
+    groups_action:  "{{ item.groups_action | default(omit) }}"
+    password:  "{{ item.password | default(omit) }}"
+    password_expired:  "{{ item.password_expired | default(omit) }}"
+    password_never_expires:  "{{ item.password_never_expires | default(omit) }}"
+    update_password:  "{{ item.update_password | default(omit) }}"
+    user_cannot_change_password:  "{{ item.user_cannot_change_password | default(omit) }}"
+  with_items: "{{ a2s_users }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"

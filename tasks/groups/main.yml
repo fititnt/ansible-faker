@@ -1,0 +1,28 @@
+---
+
+# FILE:            {{ role_path }}/tasks/groups/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/group_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_group_module.html
+
+- name: "groups | (*nix): add/remove groups"
+  group:
+    name: "{{ item.name }}"
+    gid: "{{ item.gid | default(omit) }}"
+    non_unique: "{{ item.non_unique | default(omit) }}"
+    system: "{{ item.system | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ a2s_groups }}"
+  when:
+    - "(a2s_internal_iswindows is undefined)
+      or (a2s_internal_iswindows|bool is sameas false)"
+
+- name: "groups | (Windows): add/remove groups"
+  win_group:
+    name: "{{ item.name }}"
+    description: "{{ item.description | default(omit) }}"
+    state: "{{ item.state | default(omit) }}"
+  with_items: "{{ a2s_groups }}"
+  when:
+    - "(a2s_internal_iswindows is defined)
+      and (a2s_internal_iswindows|bool is sameas true)"

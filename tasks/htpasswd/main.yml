@@ -1,0 +1,7 @@
+---
+
+# FILE:            {{ role_path }}/tasks/htpasswd/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/htpasswd_module.html
+
+# TODO: finish this file

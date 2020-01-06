@@ -1,0 +1,6 @@
+---
+# FILE:            {{ role_path }}/tasks/rclone/main.yml
+# LICENSE:         Public Domain
+
+- name: "rclone | main.yml"
+  include: "{{ role_path }}/tasks/rclone/install.yml"

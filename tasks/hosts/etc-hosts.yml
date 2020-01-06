@@ -1,0 +1,12 @@
+---
+
+# FILE:            {{ role_path }}/tasks/etc-hosts/main.yml
+# LICENSE:         Public Domain
+
+- name: "hosts | etc-hosts.yml: Add hosts to local file /etc/hosts"
+  lineinfile:
+    dest: /etc/hosts
+    line: "{{ item }}"
+    state: present
+    unsafe_writes: "{{ a2s_internal_isconteiner }}" # If is container, we allow unsafe_writes
+  with_items: "{{ a2s_hosts_etchosts }}"

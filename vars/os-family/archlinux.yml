@@ -1,0 +1,13 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/archlinux.yml
+# LICENSE:         Public Domain
+#
+# DESCRIPTION:     This file is loaded by default for at least these OSs:
+#                  'Archlinux': ['Archlinux', 'Antergos', 'Manjaro'],
+
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'root'
+a2s_internal_package_manager_group: "pacman"
+# ansible_python_interpreter: /usr/bin/python
+
+a2s_internal_iswindows: false

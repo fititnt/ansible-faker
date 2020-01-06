@@ -1,0 +1,21 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
+
+- name: "users | authorized_key: add/remove users"
+  authorized_key:
+    user: "{{ item.authorized_key.user | default(item.name) }}"
+    key: "{{ item.authorized_key.key }}"
+    state: "{{ item.authorized_key.state | default(omit) }}"
+    comment: "{{ item.authorized_key.comment | default(omit) }}"
+    exclusive: "{{ item.authorized_key.exclusive | default(omit) }}"
+    follow: "{{ item.authorized_key.follow | default(omit) }}"
+    key_options: "{{ item.authorized_key.key_options | default(omit) }}"
+    manage_dir: "{{ item.authorized_key.manage_dir | default(omit) }}"
+    path: "{{ item.authorized_key.path | default(omit) }}"
+    validate_certs: "{{ item.authorized_key.validate_certs | default(omit) }}"
+  with_items: "{{ a2s_users }}"
+  when:
+    - "(item.authorized_key is defined)"

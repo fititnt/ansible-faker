@@ -1,0 +1,61 @@
+---
+- name: Converge
+  hosts: all
+  remote_user: root
+  vars:
+
+    a2s_hosts_etchosts:
+      - "127.0.0.1  site-a.local"
+      - "127.0.0.1  cdn.site-a.local"
+      - "127.0.0.1  site-b.local"
+      - "127.0.0.1  cdn.site-b.local"
+
+    a2s_groups:
+      - name: cdns
+
+    a2s_users:
+      - name: cdn-site-a
+        groups:
+          - cdns
+      - name: cdn-site-b
+        groups:
+          - cdns
+      - name: site-a
+      - name: php-demo
+      - name: fititnt
+        authorized_key:
+          key: https://github.com/fititnt.keys
+
+    a2s_sample_content_static_sites:
+      - dest: /home/site-a/public_html
+        owner: site-a
+        group: site-a
+
+    a2s_sample_content_cdns:
+      - dest: /home/cdn-site-a/public_html
+        owner: cdn-site-a
+        group: cdns
+      - dest: /home/cdn-site-b/public_html
+        owner: cdn-site-b
+        group: cdns
+
+    a2s_sample_content_phps:
+      - dest: /home/php-demo/public_html
+        owner: php-demo
+
+    a2s_rclone: false
+    a2s_devel_nginx: true
+
+    ## If using devel-nginx AND running on containers without systemd
+    ## If using hosts and have have issues to write on /etc/hosts
+    # Set a2s_isconteiner: true to not make this role try enable a service
+    a2s_isconteiner: true
+
+  roles:
+    - role: ap-application-load-balancer-extras
+
+  pre_tasks:
+    - name: "Set ISCONTEINER=1"
+      shell: "export ISCONTEINER=1"
+      changed_when: false # This specific pre_task break Idempotence if not ignored
+

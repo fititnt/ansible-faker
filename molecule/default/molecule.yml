@@ -1,0 +1,49 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+lint:
+  name: yamllint
+  enabled: false # TODO: re-enable later
+platforms:
+  - name: instance
+    image: ${MOLECULE_DISTRO:-geerlingguy/docker-ubuntu1804-ansible:latest}
+    # command: ${MOLECULE_DOCKER_COMMAND:-""}
+    # volumes:
+    #   - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    # privileged: true
+    # pre_build_image: true
+  #- name: instance
+  #  image: ubuntu:18.04
+  #- name: instance
+  #  image: centos:7
+provisioner:
+  name: ansible
+  lint:
+    name: ansible-lint
+    enabled: false # TODO: re-enable later
+verifier:
+  name: testinfra
+  lint:
+    name: flake8
+
+scenario:
+  test_sequence:
+    - lint
+    - dependency
+    - cleanup
+    - destroy
+    - syntax
+    - create
+    - prepare
+    - converge
+    # - idempotence # TODO: re-enable later
+    - side_effect
+    - verify
+    - cleanup
+    - destroy
+
+## To debug some particular instance:
+#    MOLECULE_DISTRO=archlinux:latest molecule test --destroy=never
+#    MOLECULE_DISTRO=archlinux:latest molecule --debug test

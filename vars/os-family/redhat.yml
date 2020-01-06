@@ -1,0 +1,14 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/redhat.yml
+# LICENSE:         Public Domain
+#
+# DESCRIPTION:     This file is loaded by default for at least these OSs:
+#                  {'RedHat': ['RedHat', 'Fedora', 'CentOS', 'Scientific', 'SLC',
+#                             'Ascendos', 'CloudLinux', 'PSBM', 'OracleLinux', 'OVS',
+#                             'OEL', 'Amazon', 'Virtuozzo', 'XenServer', 'Alibaba'],
+
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'root'
+a2s_internal_package_manager_group: "yum"
+
+a2s_internal_iswindows: false

@@ -1,0 +1,8 @@
+---
+- name: Prepare
+  hosts: all
+  remote_user: root
+  gather_facts: false
+  pre_tasks:
+    - name: "Prepare setup-python.sh"
+      script: setup-python.sh

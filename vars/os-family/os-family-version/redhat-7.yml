@@ -1,0 +1,8 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/os-family-version/redhat-7.yml
+# LICENSE:         Public Domain
+
+# CentOS 7 does not have any version of NGinx without epel-release. Fedora all versions have
+a2s_internal_devel_nginx_prerequisites_packages:
+  - name: epel-release
+    state: present

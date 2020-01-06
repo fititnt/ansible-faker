@@ -1,0 +1,12 @@
+---
+# FILE:            {{ role_path }}/vars/main.yml
+# LICENSE:         Public Domain
+# DESCRIPTION:     This file {{ role_path }}/vars/main.yml always is loaded.
+
+a2s_version: "v0.2.0-alpha"
+
+a2s_internal_isconteiner: "{{ a2s_isconteiner | default(false) }}"
+
+# Draft. Eventually could be useful. Not is for now (fititnt, 2020-01-03 03:55 BRT)
+a2s_internal_rclone_manange: "{{ (a2s_rclone is defined) and (a2s_rclone|bool is sameas true) }}"
+a2s_internal_devel_nginx_manange: "{{ (a2s_devel_nginx is defined) and (a2s_devel_nginx|bool is sameas true) }}"

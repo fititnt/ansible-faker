@@ -1,0 +1,17 @@
+---
+
+# FILE:            {{ role_path }}/tasks/users/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://docs.ansible.com/ansible/latest/modules/user_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/win_user_module.html
+# SEE:             https://docs.ansible.com/ansible/latest/modules/authorized_key_module.html
+
+- name: "{{ role_path }}/tasks/users/user.yml"
+  include: "{{ role_path }}/tasks/users/user.yml"
+  tags:
+    - albextras-users-user
+
+- name: "{{ role_path }}/tasks/users/authorized_key.yml"
+  include: "{{ role_path }}/tasks/users/authorized_key.yml"
+  tags:
+    - albextras-users-authorized-key

@@ -1,0 +1,17 @@
+---
+# FILE:            {{ role_path }}/vars/os-family/freebsd.yml
+# LICENSE:         Public Domain
+#
+# DESCRIPTION:     This file is loaded by default for at least these OSs:
+#                  It means it act as fall back for at least:
+#                  'FreeBSD': ['FreeBSD', 'TrueOS'],
+
+# BSD users: read https://docs.ansible.com/ansible/latest/user_guide/intro_bsd.html
+
+# For me: https://www.cyberciti.biz/faq/how-to-prepare-freebsd-server-to-be-managed-by-ansible-tool/
+
+a2s_internal_root_user: 'root'
+a2s_internal_root_group: 'wheel'
+a2s_internal_package_manager_group: "pkgng"
+
+a2s_internal_iswindows: false
