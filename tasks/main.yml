@@ -2,6 +2,13 @@
 # FILE:            {{ role_path }}/tasks/main.yml
 # LICENSE:         Public Domain
 
+# TODO: demos for public html sould ideally be on one of these paths:
+#           /var/www/
+#           /srv
+#           /usr/share/www
+#       To respect the Filesystem Hierarchy Standard (FHS) 3.0
+#       (fititnt, 2020-01-06 14:40 BRT)
+
 - name: "Ansible Faker | Welcome message"
   debug:
     msg:

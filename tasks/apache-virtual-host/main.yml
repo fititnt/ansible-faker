@@ -1,0 +1,8 @@
+---
+# FILE:            {{ role_path }}/tasks/apache-virtual-host/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://httpd.apache.org/docs/2.4/vhosts/examples.html
+
+- name: "apache-virtual-host | draft"
+  debug:
+    msg: "apache-virtual-host is a draft. Not implemented at this moment"

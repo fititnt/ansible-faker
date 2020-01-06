@@ -1,0 +1,10 @@
+---
+# FILE:            {{ role_path }}/tasks/nginx-server-block/main.yml
+# LICENSE:         Public Domain
+# SEE:             https://www.nginx.com/resources/wiki/start/topics/examples/server_blocks/
+# SEE:             https://www.nginx.com/resources/wiki/start/#pre-canned-configurations
+# SEE:             https://www.nginx.com/resources/wiki/start/topics/tutorials/config_pitfalls/
+
+- name: "nginx-server-block | draft"
+  debug:
+    msg: "nginx-server-block is a draft. Not implemented at this moment"

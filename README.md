@@ -1,16 +1,41 @@
 # ansible-faker - v0.4.0-alpha
 
 [![Ansible Role](https://img.shields.io/ansible/role/45692)](https://galaxy.ansible.com/fititnt/faker)
-![Ansible Role Downloads](https://img.shields.io/ansible/role/d/45587)
-![Ansible Quality Score](https://img.shields.io/ansible/quality/45587)
+[![Ansible Quality Score](https://img.shields.io/ansible/quality/45692)](https://galaxy.ansible.com/fititnt/faker)
 [![Build Status](https://travis-ci.com/fititnt/ansible-faker.svg?branch=master)](https://travis-ci.com/fititnt/ansible-faker)
 
-**[working-draft] Faker is a Ansible role that generates fake data for you.
-Inspired on [PHP Faker](https://github.com/fzaninotto/Faker). Initial work from
-[ansible-syntactic-sugar](https://github.com/fititnt/ansible-syntactic-sugar)**
+**[working-draft] Faker is a Ansible role that generates fake data already
+deploy it the server. _Inspired_ on solutions like
+[PHP Faker](https://github.com/fzaninotto/Faker) /
+[Ruby Faker](https://github.com/faker-ruby/faker) /
+[Perl Data Faker](https://metacpan.org/pod/Data::Faker),
+[Python Faker](https://pypi.org/project/Faker/). Initial work from
+[fititnt.syntactic_sugar](https://github.com/fititnt/ansible-syntactic-sugar).**
 
 > **Warning: this is a pre-release**. Variable naming conventions may change.
 Feedback is welcome!
+
+---
+
+**Happy Path example 1**: you have do test one server deployed with Ansible
+but need to create huge amount of data to do
+stress tests. Ideally ansible-faker should allow (both deterministically and at
+_random_), simulate plausible real data. Think of creating 100~10.000 system
+users, each one with a folder with demo content, each one with an Apache Virtual
+Host or Nginx Server Block.
+
+**Happy Path example 2**: while you did not need to do stress test, you need
+plausible content for some types of deployments (like a CDN) and as such need
+have several types of content (varying in file extensions, sizes, etc) to
+discover issues before them happen in production. ansible-faker should allow you
+be able to do it.
+
+**Happy Path example 3**: you are a developer of an Ansible role/library/plugin
+and need to integrate more complex tests on your CI, but doing is so complex
+that you just don't do it. ansible-faker should allow you to emulate such tests
+with reasonable performance.
+
+---
 
 <!--
 **[not-production-ready] AP-ALB Extras is a well tested cross-platform Ansible
@@ -49,6 +74,7 @@ Note: this project may eventually be renamed.
     - [Minimal Playbook](#minimal-playbook)
     - [Playbook using all Public APIs](#playbook-using-all-public-apis)
     - [Playbook full example with Continuos Integration and testinfra](#playbook-full-example-with-continuos-integration-and-testinfra)
+- [TODO](#todo)
 - [License](#license)
     - [ansible-faker](#ansible-faker)
     - [files/static-site](#filesstatic-site)
@@ -311,6 +337,23 @@ very serius infrastructure or several people making changes, well written
 Ansible playbooks may already be great. If this is not sufficient, check our
 testinfra tests file at
 [molecule/default/tests/test_default.py](molecule/default/tests/test_default.py).
+
+## TODO
+
+Things that are expected to at some point be implemented or fixed:
+
+- **MVP of `faker_apache_virtualhost`**
+- **MVP of `faker_nginx_serverblock`**
+- **Ansible Faker _is not_ generating fake data out of the box; it shoud be simpler**
+  - As v0.4.0-alpha, this role depends of the user to pre-populate the data
+  - One issue with this feature is that, different from Faker packages from
+    most programming languages, Ansible Faker very likely would make sense that
+    some variables are reused across different public APIs
+    - Feedback on how to design intuitive interface are welcome!
+- **Make easy setup to at least one programming language Faker app, so the end users could use it**
+  - Examples:
+    - PHP Faker <https://github.com/fzaninotto/Faker>
+    - Python Faker <https://pypi.org/project/Faker/>
 
 ## License
 This Ansible role have content from several places with different licenses and
